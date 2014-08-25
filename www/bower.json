@@ -1,0 +1,21 @@
+{
+    "authors": [
+        "Wong Hoi Sing Edison <hswong3i@pantarei-design.com.com>"
+    ],
+    "dependencies": {
+        "bootstrap": "~3.2.0",
+        "jquery": "~2.1.1"
+    },
+    "homepage": "https://github.com/authbucket/push-cordova",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "license": "MIT",
+    "name": "push-cordova",
+    "private": true,
+    "version": "0.0.1"
+}
