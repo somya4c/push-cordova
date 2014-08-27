@@ -9,6 +9,9 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarBackgroundColor" value="#FFFFFF" />
+    <preference name="StatusBarStyle" value="default" />
     <feature name="PushPlugin">
         <param name="id" value="com.phonegap.plugins.PushPlugin" />
     </feature>
@@ -23,5 +26,8 @@
     </feature>
     <feature name="Media">
         <param name="id" value="org.apache.cordova.media" />
+    </feature>
+    <feature name="StatusBar">
+        <param name="id" value="org.apache.cordova.statusbar" />
     </feature>
 </widget>
