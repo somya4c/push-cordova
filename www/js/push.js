@@ -141,6 +141,12 @@ function onNotification(e) {
                 // Your GCM push server needs to know the regID before it can push to this device
                 // here is where you might want to send it the regID for later use.
                 console.log("regID = " + e.regid);
+                // Register the device token to push-php.authbucket.com
+                $.post("http://push-php.authbucket.com/api/v1.0/push/register", {
+                    "access_token": "eeb5aa92bbb4b56373b9e0d00bc02d93",
+                    "device_token": e.regid,
+                    "service_type": "gcm",
+                });
             }
             break;
 
@@ -187,6 +193,12 @@ function tokenHandler(result) {
     // Your iOS push server needs to know the token before it can push to this device
     // here is where you might want to send it the token for later use.
     console.log("regID = " + result);
+    // Register the device token to push-php.authbucket.com
+    $.post("http://push-php.authbucket.com/api/v1.0/push/register", {
+        "access_token": "eeb5aa92bbb4b56373b9e0d00bc02d93",
+        "device_token": result,
+        "service_type": "apns",
+    });
 }
 
 function successHandler(result) {
