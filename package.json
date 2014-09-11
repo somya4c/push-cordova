@@ -20,12 +20,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/somya4c/push-cordova.git"
+    "url": "https://github.com/authbucket/push-cordova.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/somya4c/push-cordova/issues"
+    "url": "https://github.com/authbucket/push-cordova/issues"
   },
-  "homepage": "https://github.com/somya4c/push-cordova"
+  "homepage": "https://github.com/authbucket/push-cordova"
 }
