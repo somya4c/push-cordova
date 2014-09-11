@@ -1,23 +1,31 @@
+
+
 module.exports = function(grunt) {
 
-    // Project configuration.
+    //Project configuration.
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-        uglify: {
-            options: {
-                banner: '/*! push.js <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-            },
-            build: {
-                src: 'www/js/push.js',
-                dest: 'www/js/push.min.js'
+        copy: {
+            main: {
+                files: [
+                    {expand: true, flatten: true, src: ['node_modules/bootstrap/dist/css/bootstrap-theme.min.css'], dest: 'www/css'},
+
+                    {expand: true, flatten: true, src: ['node_modules/bootstrap/dist/css/bootstrap.min.css'], dest: 'www/css'},
+
+                    {expand: true, flatten: true, src: ['node_modules/jquery/dist/jquery.min.js'], dest: 'www/js'},
+
+                    {expand: true, flatten: true, src: ['node_modules/bootstrap/dist/js/bootstrap.min.js'], dest: 'www/js'}
+                ]
             }
         }
-    });
+    } );
 
-    // Load the plugin that provides the "uglify" task.
+    // Load the plugins.
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Default task(s).
     grunt.registerTask('default', ['uglify']);
 
 };
+
+
