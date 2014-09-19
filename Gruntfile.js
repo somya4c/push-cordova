@@ -21,42 +21,40 @@ module.exports = function(grunt) {
             },
         },
         copy: {
-            main: {
-                files: [{
-                    expand: true,
-                    flatten: true,
-                    src: ['node_modules/bootstrap/dist/css/bootstrap-theme.min.css'],
-                    dest: 'www/css'
-                }, {
-                    expand: true,
-                    flatten: true,
-                    src: ['node_modules/bootstrap/dist/css/bootstrap.min.css'],
-                    dest: 'www/css'
-                }, {
-                    expand: true,
-                    flatten: true,
-                    src: ['node_modules/jquery/dist/jquery.min.js'],
-                    dest: 'www/js'
-                }, {
-                    expand: true,
-                    flatten: true,
-                    src: ['node_modules/bootstrap/dist/js/bootstrap.min.js'],
-                    dest: 'www/js'
-                }]
+            node_module: {
+                files: {
+                    'www/css/bootstrap-theme.min.css': 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
+                    'www/css/bootstrap.min.css': 'bower_components/bootstrap/dist/css/bootstrap.min.css',
+                    'www/js/angular.min.js': 'bower_components/angular/angular.min.js',
+                    'www/js/bootstrap.min.js': 'bower_components/bootstrap/dist/js/bootstrap.min.js',
+                    'www/js/jquery.min.js': 'bower_components/jquery/dist/jquery.min.js'
+                }
             }
         },
 
         // Preprocess.
         jshint: {
-            all: ["Gruntfile.js", "src/**/*.js"]
-        },
-        jsbeautifier: {
-            files: ["Gruntfile.js", "src/**/*.js"],
+            options: {
+                force: true,
+                eqnull: true,
+                browser: true,
+            },
+            files: {
+                src: ['Gruntfile.js', 'src/**/*.js'],
+            }
         },
 
         // Process
         uglify: {
             my_target: {
+                options: {
+                    beautify: true
+                },
+                files:{
+                    'src/.js': ['src/**/*.js']
+                }
+            },
+            compress:{
                 files: [{
                     expand: true,
                     cwd: 'src/js/',
@@ -128,13 +126,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-cordovacli');
-    grunt.loadNpmTasks('grunt-jsbeautifier');
 
     // Define task(s).
     grunt.registerTask('cleanup', ['clean']);
     grunt.registerTask('init', ['cordovacli', 'copy']);
-    grunt.registerTask('preprocess', ['jshint', 'jsbeautifier']);
-    grunt.registerTask('process', ['uglify', 'less', 'imagemin', 'htmlmin']);
+    grunt.registerTask('preprocess', ['jshint']);
+    grunt.registerTask('process', ['uglify:my_target','uglify:compress', 'less', 'imagemin', 'htmlmin']);
 
     // Default task.
     grunt.registerTask('default', function() {

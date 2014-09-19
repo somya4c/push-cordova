@@ -1,0 +1,20 @@
+{
+    "authors": [
+        "Somya <somya4c@pantarei-design.com>"
+    ],
+    "dependencies": {
+        "angular": "~1.2.25",
+        "bootstrap": "~3.2.0"
+    },
+    "homepage": "https://github.com/somya4c/push-cordova",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "license": "MIT",
+    "name": "push-cordova",
+    "version": "0.0.3"
+}
