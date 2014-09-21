@@ -3,11 +3,8 @@ push-cordova
 
 Run the following commands for initialization and testing:
 
-    $ cd www
+    $ npm install
     $ bower install
-    $ cordova plugin add https://github.com/phonegap-build/PushPlugin.git
-    $ cordova --experimental restore plugins
-    $ cordova platform add ios
-    $ cordova platform add android
+    $ grunt
     $ cordova run ios
     $ cordova run android
