@@ -1,27 +1,12 @@
 module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
-        // Initialization.
-        cordovacli: {
-            options: {
-                path: '.'
-            },
-            plugin: {
-                options: {
-                    command: 'plugin',
-                    action: 'add',
-                    plugins: [
-                        'https://github.com/phonegap-build/PushPlugin.git',
-                        'console',
-                        'device',
-                        'file',
-                        'media',
-                    ]
-                }
-            },
+        clean: {
+            build: ['platforms/*', 'plugins/*', 'www/*'],
         },
+
         copy: {
-            node_module: {
+            vendor: {
                 files: {
                     'www/css/bootstrap-theme.min.css': 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
                     'www/css/bootstrap.min.css': 'bower_components/bootstrap/dist/css/bootstrap.min.css',
@@ -32,74 +17,12 @@ module.exports = function(grunt) {
             }
         },
 
-        // Preprocess.
-        jshint: {
-            options: {
-                force: true,
-                eqnull: true,
-                browser: true,
-            },
-            files: {
-                src: ['Gruntfile.js', 'src/**/*.js'],
-            }
-        },
-
-        // Process
-        uglify: {
-            my_target: {
-                options: {
-                    beautify: true
-                },
-                files:{
-                    'src/.js': ['src/**/*.js']
-                }
-            },
-            compress:{
-                files: [{
-                    expand: true,
-                    cwd: 'src/js/',
-                    src: ['**/*.js'],
-                    dest: 'www/js/',
-                    ext: '.min.js',
-                    extDot: 'first'
-                }]
-            }
-        },
-        less: {
-            compress: {
-                options: {
-                    paths: ["src/less"],
-                    compress: true,
-                },
-                files: [{
-                    expand: true,
-                    cwd: 'src/less/',
-                    src: ['**/*.less'],
-                    dest: 'www/css/',
-                    ext: '.min.css',
-                    extDot: 'first'
-                }]
-            },
-        },
-        imagemin: {
-            static: {
-                options: {
-                    optimizationLevel: 3,
-                },
-                files: [{
-                    expand: true,
-                    cwd: 'src/img/',
-                    src: ['**/*.{png,jpg,gif}'],
-                    dest: 'www/img/'
-                }]
-            }
-        },
         htmlmin: {
-            dist: {
-                options: {
-                    removeComments: true,
-                    collapseWhitespace: true
-                },
+            options: {
+                removeComments: true,
+                collapseWhitespace: true
+            },
+            src: {
                 files: [{
                     'www/index.html': 'src/index.html',
                 }, {
@@ -111,9 +34,79 @@ module.exports = function(grunt) {
             }
         },
 
-        // Cleanup
-        clean: {
-            cleanup: ['platforms/*', 'plugins/*', 'www/*']
+        imagemin: {
+            options: {
+                optimizationLevel: 3,
+            },
+            src: {
+                files: [{
+                    expand: true,
+                    cwd: 'src/img/',
+                    src: ['**/*.{png,jpg,gif}'],
+                    dest: 'www/img/'
+                }]
+            }
+        },
+
+        jshint: {
+            options: {
+                force: true,
+                eqnull: true,
+                browser: true,
+            },
+            src: {
+                files: {
+                    src: ['Gruntfile.js', 'src/**/*.js'],
+                }
+            }
+        },
+
+        less: {
+            options: {
+                paths: ["src/less"],
+                compress: true,
+            },
+            src: {
+                files: [{
+                    expand: true,
+                    cwd: 'src/less/',
+                    src: ['**/*.less'],
+                    dest: 'www/css/',
+                    ext: '.min.css',
+                    extDot: 'first'
+                }]
+            },
+        },
+
+        uglify: {
+            src: {
+                files: [{
+                    expand: true,
+                    cwd: 'src/js/',
+                    src: ['**/*.js'],
+                    dest: 'www/js/',
+                    ext: '.min.js',
+                    extDot: 'first'
+                }]
+            }
+        },
+
+        shell: {
+            plugin: {
+                command: [
+                    'cordova plugin add https://github.com/phonegap-build/PushPlugin.git',
+                    'cordova plugin add org.apache.cordova.console',
+                    'cordova plugin add org.apache.cordova.device',
+                    'cordova plugin add org.apache.cordova.file',
+                    'cordova plugin add org.apache.cordova.media',
+                ].join('&&')
+            },
+            platform: {
+                command: [
+                    'cordova platform add android',
+                    'cordova platform add ios'
+                ].join('&&')
+            }
         }
     });
 
@@ -125,16 +118,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-cordovacli');
+    grunt.loadNpmTasks('grunt-shell');
 
     // Define task(s).
-    grunt.registerTask('cleanup', ['clean']);
-    grunt.registerTask('init', ['cordovacli', 'copy']);
-    grunt.registerTask('preprocess', ['jshint']);
-    grunt.registerTask('process', ['uglify:my_target','uglify:compress', 'less', 'imagemin', 'htmlmin']);
+    grunt.registerTask('init', ['shell', 'copy']);
+    grunt.registerTask('make', ['uglify', 'less', 'imagemin', 'htmlmin']);
 
     // Default task.
-    grunt.registerTask('default', function() {
-        grunt.task.run(['init', 'preprocess', 'process']);
-    });
+    grunt.registerTask('default', ['init', 'make']);
 };

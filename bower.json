@@ -1,12 +1,12 @@
 {
     "authors": [
-        "Somya <somya4c@pantarei-design.com>"
+        "Wong Hoi Sing Edison <hswong3i@pantarei-design.com>"
     ],
     "dependencies": {
         "angular": "~1.2.25",
         "bootstrap": "~3.2.0"
     },
-    "homepage": "https://github.com/somya4c/push-cordova",
+    "homepage": "https://github.com/authbucket/push-cordova",
     "ignore": [
         "**/.*",
         "node_modules",
@@ -16,5 +16,5 @@
     ],
     "license": "MIT",
     "name": "push-cordova",
-    "version": "0.0.3"
+    "version": "1.0.0"
 }
