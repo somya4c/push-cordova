@@ -36,7 +36,7 @@ module.exports = function(grunt) {
 
         imagemin: {
             options: {
-                optimizationLevel: 3,
+                optimizationLevel: 3
             },
             src: {
                 files: [{
@@ -76,6 +76,10 @@ module.exports = function(grunt) {
                     extDot: 'first'
                 }]
             },
+        },
+
+        nodeunit: {
+            test: ['test/**/*_test.js'],
         },
 
         uglify: {
@@ -128,6 +132,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-nodeunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-shell');
 
@@ -137,5 +142,6 @@ module.exports = function(grunt) {
     grunt.registerTask('make', ['uglify', 'less', 'imagemin', 'htmlmin', 'shell:build']);
 
     // Default task.
-    grunt.registerTask('default', ['init', 'lint', 'make']);
+    grunt.registerTask('default', ['init', 'lint', 'nodeunit', 'make']);
+
 };
