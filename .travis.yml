@@ -1,0 +1,13 @@
+language: node_js
+
+node_js:
+    - 0.10
+
+before_script:
+    - npm -g install cordova
+    - npm install
+    - bower install
+    - grunt
+
+script:
+    - node_modules/.bin/grunt nodeunit

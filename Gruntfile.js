@@ -12,7 +12,7 @@ module.exports = function(grunt) {
                     'www/css/bootstrap.min.css': 'bower_components/bootstrap/dist/css/bootstrap.min.css',
                     'www/js/angular.min.js': 'bower_components/angular/angular.min.js',
                     'www/js/bootstrap.min.js': 'bower_components/bootstrap/dist/js/bootstrap.min.js',
-                    'www/js/jquery.min.js': 'bower_components/jquery/dist/jquery.min.js'
+                    'www/js/jquery.min.js': 'bower_components/jquery/dist/jquery.min.js',
                 }
             }
         },
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         htmlmin: {
             options: {
                 removeComments: true,
-                collapseWhitespace: true
+                collapseWhitespace: true,
             },
             src: {
                 files: [{
@@ -29,21 +29,21 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'src/templates/',
                     src: ['**/*.html'],
-                    dest: 'www/templates/'
+                    dest: 'www/templates/',
                 }]
             }
         },
 
         imagemin: {
             options: {
-                optimizationLevel: 3
+                optimizationLevel: 3,
             },
             src: {
                 files: [{
                     expand: true,
                     cwd: 'src/img/',
                     src: ['**/*.{png,jpg,gif}'],
-                    dest: 'www/img/'
+                    dest: 'www/img/',
                 }]
             }
         },
@@ -73,7 +73,7 @@ module.exports = function(grunt) {
                     src: ['**/*.less'],
                     dest: 'www/css/',
                     ext: '.min.css',
-                    extDot: 'first'
+                    extDot: 'first',
                 }]
             },
         },
@@ -90,7 +90,7 @@ module.exports = function(grunt) {
                     src: ['**/*.js'],
                     dest: 'www/js/',
                     ext: '.min.js',
-                    extDot: 'first'
+                    extDot: 'first',
                 }]
             }
         },
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
         shell: {
             options: {
                 execOptions: {
-                    maxBuffer: 1024 * 1024
+                    maxBuffer: 1024 * 1024,
                 }
             },
             plugin: {
@@ -113,13 +113,13 @@ module.exports = function(grunt) {
             platform: {
                 command: [
                     'cordova platform add android',
-                    'cordova platform add ios'
+                    'cordova platform add ios',
                 ].join('&&')
             },
             build: {
                 command: [
                     'cordova build android',
-                    'cordova build ios'
+                    'cordova build ios',
                 ].join('&&')
             }
         }
@@ -142,6 +142,5 @@ module.exports = function(grunt) {
     grunt.registerTask('make', ['uglify', 'less', 'imagemin', 'htmlmin', 'shell:build']);
 
     // Default task.
-    grunt.registerTask('default', ['init', 'lint', 'nodeunit', 'make']);
-
+    grunt.registerTask('default', ['init', 'lint', 'make']);
 };
