@@ -63,7 +63,7 @@ module.exports = function(grunt) {
 
         less: {
             options: {
-                paths: ["src/less"],
+                paths: ['src/less'],
                 compress: true,
             },
             src: {
@@ -142,5 +142,6 @@ module.exports = function(grunt) {
     grunt.registerTask('make', ['uglify', 'less', 'imagemin', 'htmlmin', 'shell:build']);
 
     // Default task.
+    grunt.registerTask('test', ['copy', 'jshint', 'uglify', 'less', 'imagemin', 'htmlmin', 'nodeunit']);
     grunt.registerTask('default', ['init', 'lint', 'make']);
 };
