@@ -6,6 +6,3 @@ node_js:
 before_script:
     - npm install
     - bower install
-
-script:
-    - node_modules/.bin/grunt test
