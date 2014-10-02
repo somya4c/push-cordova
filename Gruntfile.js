@@ -12,7 +12,7 @@ module.exports = function(grunt) {
                     'www/css/bootstrap.min.css': 'bower_components/bootstrap/dist/css/bootstrap.min.css',
                     'www/js/angular.min.js': 'bower_components/angular/angular.min.js',
                     'www/js/bootstrap.min.js': 'bower_components/bootstrap/dist/js/bootstrap.min.js',
-                    'www/js/jquery.min.js': 'bower_components/jquery/dist/jquery.min.js'
+                    'www/js/jquery.min.js': 'bower_components/jquery/dist/jquery.min.js',
                 }
             }
         },
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         htmlmin: {
             options: {
                 removeComments: true,
-                collapseWhitespace: true
+                collapseWhitespace: true,
             },
             src: {
                 files: [{
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'src/templates/',
                     src: ['**/*.html'],
-                    dest: 'www/templates/'
+                    dest: 'www/templates/',
                 }]
             }
         },
@@ -43,7 +43,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'src/img/',
                     src: ['**/*.{png,jpg,gif}'],
-                    dest: 'www/img/'
+                    dest: 'www/img/',
                 }]
             }
         },
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
 
         less: {
             options: {
-                paths: ["src/less"],
+                paths: ['src/less'],
                 compress: true,
             },
             src: {
@@ -73,9 +73,13 @@ module.exports = function(grunt) {
                     src: ['**/*.less'],
                     dest: 'www/css/',
                     ext: '.min.css',
-                    extDot: 'first'
+                    extDot: 'first',
                 }]
             },
+        },
+
+        nodeunit: {
+            test: ['test/**/*_test.js'],
         },
 
         uglify: {
@@ -86,12 +90,17 @@ module.exports = function(grunt) {
                     src: ['**/*.js'],
                     dest: 'www/js/',
                     ext: '.min.js',
-                    extDot: 'first'
+                    extDot: 'first',
                 }]
             }
         },
 
         shell: {
+            options: {
+                execOptions: {
+                    maxBuffer: 1024 * 1024,
+                }
+            },
             plugin: {
                 command: [
                     'cordova plugin add https://github.com/phonegap-build/PushPlugin.git',
@@ -104,7 +113,13 @@ module.exports = function(grunt) {
             platform: {
                 command: [
                     'cordova platform add android',
-                    'cordova platform add ios'
+                    'cordova platform add ios',
+                ].join('&&')
+            },
+            build: {
+                command: [
+                    'cordova build android',
+                    'cordova build ios',
                 ].join('&&')
             }
         }
@@ -117,13 +132,16 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-nodeunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-shell');
 
     // Define task(s).
-    grunt.registerTask('init', ['shell', 'copy']);
-    grunt.registerTask('make', ['uglify', 'less', 'imagemin', 'htmlmin']);
+    grunt.registerTask('init', ['shell:plugin', 'shell:platform', 'copy']);
+    grunt.registerTask('lint', ['jshint']);
+    grunt.registerTask('make', ['uglify', 'less', 'imagemin', 'htmlmin', 'shell:build']);
 
     // Default task.
-    grunt.registerTask('default', ['init', 'make']);
+    grunt.registerTask('test', ['copy', 'jshint', 'uglify', 'less', 'imagemin', 'htmlmin', 'nodeunit']);
+    grunt.registerTask('default', ['init', 'lint', 'make']);
 };
