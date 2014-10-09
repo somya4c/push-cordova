@@ -114,7 +114,7 @@ function onDeviceReady() {
 // handle APNS notifications for iOS
 function onNotificationAPN(e) {
     if (e.alert) {
-        $("#app-status-ul").append('<li>push-notification: ' + e.alert + '</li>');
+        $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.alert + '</li>');
         // showing an alert also requires the org.apache.cordova.dialogs plugin
         navigator.notification.alert(e.alert);
     }
@@ -177,11 +177,7 @@ function onNotification(e) {
                     $("#app-status-ul").append('<li>--BACKGROUND NOTIFICATION--' + '</li>');
             }
 
-            $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
-            //android only
-            $("#app-status-ul").append('<li>MESSAGE -> MSGCNT: ' + e.payload.msgcnt + '</li>');
-            //amazon-fireos only
-            $("#app-status-ul").append('<li>MESSAGE -> TIMESTAMP: ' + e.payload.timeStamp + '</li>');
+            $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.alert + '</li>');
             break;
 
         case 'error':
@@ -195,7 +191,7 @@ function onNotification(e) {
 }
 
 function tokenHandler(result) {
-    $("#app-status-ul").append('<li>token: ' + result + '</li>');
+    $("#app-status-ul").append('<li>REGISTERED -> REGID:' + result + "</li>");
     // Your iOS push server needs to know the token before it can push to this device
     // here is where you might want to send it the token for later use.
     console.log("regID = " + result);
