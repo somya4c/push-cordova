@@ -142,10 +142,16 @@ function onNotification(e) {
                 // here is where you might want to send it the regID for later use.
                 console.log("regID = " + e.regid);
                 // Register the device token to push-php.authbucket.com
-                $.post("http://push-php.authbucket.com/api/v1.0/push/register", {
-                    "access_token": "eeb5aa92bbb4b56373b9e0d00bc02d93",
-                    "device_token": e.regid,
-                    "service_type": "gcm",
+                $.ajax({
+                    url: "http://push-php.authbucket.com/api/v1.0/push/register.json",
+                    type: "POST",
+                    dataType: "json",
+                    username: "demousername1",
+                    password: "demopassword1",
+                    data: JSON.stringify({
+                        deviceToken: e.regid,
+                        variantId: "78b67c04bfd60ddfc8c90895d36e1e05",
+                    }),
                 });
             }
             break;
@@ -194,10 +200,16 @@ function tokenHandler(result) {
     // here is where you might want to send it the token for later use.
     console.log("regID = " + result);
     // Register the device token to push-php.authbucket.com
-    $.post("http://push-php.authbucket.com/api/v1.0/push/register", {
-        "access_token": "eeb5aa92bbb4b56373b9e0d00bc02d93",
-        "device_token": result,
-        "service_type": "apns",
+    $.ajax({
+        url: "http://push-php.authbucket.com/api/v1.0/push/register.json",
+        type: "POST",
+        dataType: "json",
+        username: "demousername1",
+        password: "demopassword1",
+        data: JSON.stringify({
+            deviceToken: result,
+            variantId: "f2ee1d163e9c9b633efca95fb9733f35",
+        }),
     });
 }
 
