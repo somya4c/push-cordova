@@ -103,7 +103,7 @@ module.exports = function(grunt) {
             },
             plugin: {
                 command: [
-                    'cordova plugin add https://github.com/phonegap-build/PushPlugin.git',
+                    'cordova plugin add https://github.com/somya4c/PushPlugin',
                     'cordova plugin add org.apache.cordova.console',
                     'cordova plugin add org.apache.cordova.device',
                     'cordova plugin add org.apache.cordova.file',
@@ -143,5 +143,6 @@ module.exports = function(grunt) {
 
     // Default task.
     grunt.registerTask('test', ['copy', 'jshint', 'uglify', 'less', 'imagemin', 'htmlmin', 'nodeunit']);
+    grunt.registerTask('dev', ['shell:platform', 'copy', 'lint', 'make']);
     grunt.registerTask('default', ['init', 'lint', 'make']);
 };
